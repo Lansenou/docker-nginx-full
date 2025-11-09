@@ -17,4 +17,9 @@ jobs:
       - name: Log in to Docker Hub
         run: echo ${{ secrets.DOCKER_PASS }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
       - name: Run build
-        run: ./local-buildx.sh
+        run: |
+          TAG=$GITHUB_REF_NAME
+          if [ "$TAG" = "crowdsec" ]; then
+            TAG="latest"
+          fi
+          ./local-buildx.sh -t $TAG
