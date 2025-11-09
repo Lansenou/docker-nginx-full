@@ -15,9 +15,10 @@ jobs:
     container:
       image: ghcr.io/jenkinsci/jenkinsfile-runner:master
     steps:
+      - uses: actions/setup-node@v6
       - uses: actions/checkout@v2
-    #   - name: Log in to Docker Hub
-    #     run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
       - name: Run Jenkinsfile
         uses: jenkinsci/jfr-container-action@master
         with:
