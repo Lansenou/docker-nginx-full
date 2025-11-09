@@ -7,8 +7,7 @@ pipeline {
 	}
 	options {
 		buildDiscarder(logRotator(numToKeepStr: '5'))
-		disableConcurrentBuilds()
-		ansiColor('xterm')
+		disableConcurrentBuilds()		
 	}
 	environment {
 		DOCKERHUB_NAMESPACE = 'nginxproxymanager'
@@ -66,8 +65,10 @@ pipeline {
 				BUILDX_NAME = "${IMAGE}_${GIT_BRANCH}_base"
 			}
 			steps {
-				sh 'docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"'
-				sh "./scripts/buildx --push -f docker/Dockerfile ${BUILDX_PUSH_TAGS}"
+                ansiColor('xterm') {
+                    sh 'docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"'
+                    sh "./scripts/buildx --push -f docker/Dockerfile ${BUILDX_PUSH_TAGS}"
+                }
 			}
 		}
 		stage('Acme Clients') {
@@ -75,8 +76,10 @@ pipeline {
 				BUILDX_NAME = "${IMAGE}_${GIT_BRANCH}_node"
 			}
 			steps {
-				sh "./scripts/buildx --push -f docker/Dockerfile.acmesh ${BUILDX_PUSH_TAGS_ACMESH}"
-				sh "./scripts/buildx --push -f docker/Dockerfile.certbot ${BUILDX_PUSH_TAGS_CERTBOT}"
+                ansiColor('xterm') {
+                    sh "./scripts/buildx --push -f docker/Dockerfile.acmesh ${BUILDX_PUSH_TAGS_ACMESH}"
+                    sh "./scripts/buildx --push -f docker/Dockerfile.certbot ${BUILDX_PUSH_TAGS_CERTBOT}"
+                }
 			}
 		}
 		stage('Dev Tools') {
@@ -84,8 +87,11 @@ pipeline {
 				BUILDX_NAME = "${IMAGE}_${GIT_BRANCH}_node"
 			}
 			steps {
-				sh "./scripts/buildx --push -f docker/Dockerfile.acmesh-golang ${BUILDX_PUSH_TAGS_ACMESH_GOLANG}"
-				sh "./scripts/buildx --push -f docker/Dockerfile.certbot-node ${BUILDX_PUSH_TAGS_CERTBOT_NODE}"
+                ansiColor('xterm') {
+                    sh "./scripts/buildx --push -f docker/Dockerfile.acmesh-golang ${BUILDX_PUSH_TAGS_ACMESH_GOLANG}"
+				    sh "./scripts/buildx --push -f docker/Dockerfile.certbot-node ${BUILDX_PUSH_TAGS_CERTBOT_NODE}"
+                }
+				
 			}
 		}
 		stage('PR Comment') {
