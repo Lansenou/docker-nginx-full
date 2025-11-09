@@ -17,18 +17,8 @@ jobs:
     steps:
     #   - uses: actions/setup-node@v6
       - uses: actions/checkout@v3
-      - name: Test print
-        run: echo Hello!
-      - name: Print test value
-        env:
-          TEST: ${{ vars.TEST }}
-        run: |
-            echo "Test value is: $TEST"
       - name: Log in to Docker Hub
-        env: 
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
-          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
-        run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+        run: echo ${{ secrets.DOCKER_PASS }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
       - name: Run Jenkinsfile
         uses: jenkinsci/jfr-container-action@master
         with:
