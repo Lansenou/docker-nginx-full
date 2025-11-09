@@ -1,0 +1,30 @@
+name: Run Jenkinsfile via Jenkinsfile Runner
+
+on:
+  schedule:
+    - cron: '0 * * * *'    # hourly, adjust as needed
+  workflow_dispatch:
+    inputs: {}
+  push:
+    branches:
+      - crowdsec
+
+jobs:
+  jenkins-run:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jenkinsci/jenkinsfile-runner:master
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: crowdsec
+          fetch-depth: 0
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+      - name: Run Jenkinsfile
+        uses: jenkinsci/jfr-container-action@master
+        with:
+          command: run
+          jenkinsfile: .jenkins/Jenkinsfile
+          pluginstxt: plugins.txt

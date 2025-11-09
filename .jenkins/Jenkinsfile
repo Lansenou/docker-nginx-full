@@ -1,6 +1,6 @@
 pipeline {
 	triggers {
-		cron( env.BRANCH_NAME.equals('master') ? 'H 1 * * *' : '')
+		cron( env.BRANCH_NAME.equals('crowdsec') ? 'H 1 * * *' : '')
 	}
 	agent {
 		label 'docker-multiarch'
@@ -26,7 +26,7 @@ pipeline {
 			parallel {
 				stage('Master') {
 					when {
-						branch 'master'
+						branch 'crowdsec'
 					}
 					steps {
 						script {
@@ -42,7 +42,7 @@ pipeline {
 				stage('Other') {
 					when {
 						not {
-							branch 'master'
+							branch 'crowdsec'
 						}
 					}
 					steps {
@@ -66,10 +66,8 @@ pipeline {
 				BUILDX_NAME = "${IMAGE}_${GIT_BRANCH}_base"
 			}
 			steps {
-				withCredentials([usernamePassword(credentialsId: 'jc21-dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
-					sh 'docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"'
-					sh "./scripts/buildx --push -f docker/Dockerfile ${BUILDX_PUSH_TAGS}"
-				}
+				sh 'docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"'
+				sh "./scripts/buildx --push -f docker/Dockerfile ${BUILDX_PUSH_TAGS}"
 			}
 		}
 		stage('Acme Clients') {
@@ -77,11 +75,8 @@ pipeline {
 				BUILDX_NAME = "${IMAGE}_${GIT_BRANCH}_node"
 			}
 			steps {
-				withCredentials([usernamePassword(credentialsId: 'jc21-dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
-					sh 'docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"'
-					sh "./scripts/buildx --push -f docker/Dockerfile.acmesh ${BUILDX_PUSH_TAGS_ACMESH}"
-					sh "./scripts/buildx --push -f docker/Dockerfile.certbot ${BUILDX_PUSH_TAGS_CERTBOT}"
-				}
+				sh "./scripts/buildx --push -f docker/Dockerfile.acmesh ${BUILDX_PUSH_TAGS_ACMESH}"
+				sh "./scripts/buildx --push -f docker/Dockerfile.certbot ${BUILDX_PUSH_TAGS_CERTBOT}"
 			}
 		}
 		stage('Dev Tools') {
@@ -89,11 +84,8 @@ pipeline {
 				BUILDX_NAME = "${IMAGE}_${GIT_BRANCH}_node"
 			}
 			steps {
-				withCredentials([usernamePassword(credentialsId: 'jc21-dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
-					sh 'docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"'
-					sh "./scripts/buildx --push -f docker/Dockerfile.acmesh-golang ${BUILDX_PUSH_TAGS_ACMESH_GOLANG}"
-					sh "./scripts/buildx --push -f docker/Dockerfile.certbot-node ${BUILDX_PUSH_TAGS_CERTBOT_NODE}"
-				}
+				sh "./scripts/buildx --push -f docker/Dockerfile.acmesh-golang ${BUILDX_PUSH_TAGS_ACMESH_GOLANG}"
+				sh "./scripts/buildx --push -f docker/Dockerfile.certbot-node ${BUILDX_PUSH_TAGS_CERTBOT_NODE}"
 			}
 		}
 		stage('PR Comment') {
