@@ -11,11 +11,11 @@ on:
 
 jobs:
   jenkins-run:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     container:
       image: ghcr.io/jenkinsci/jenkinsfile-runner:master
     steps:
-    #   - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
       - name: Update system
         run: |
             apt-get update
