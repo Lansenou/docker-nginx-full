@@ -12,8 +12,8 @@ on:
 jobs:
   jenkins-run:
     runs-on: ubuntu-22.04
-    container:
-      image: ghcr.io/jenkinsci/jenkinsfile-runner:master
+    # container:
+    #   image: ghcr.io/jenkinsci/jenkinsfile-runner:master
     steps:
     #   - uses: actions/setup-node@v6
       - uses: actions/checkout@v3
