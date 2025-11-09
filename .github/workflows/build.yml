@@ -22,5 +22,5 @@ jobs:
           if [ "$TAG" = "crowdsec" ]; then
             TAG="latest"
           fi
-          echo Pushing to image: nginx-full:$TAG
-          ./local-buildx.sh -t nginx-full:$TAG
+          echo Pushing to image: lansje/nginx-full:$TAG
+          ./local-buildx.sh -t lansje/nginx-full:$TAG
