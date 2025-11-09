@@ -12,12 +12,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: crowdsec
+          fetch_depth: 0
           persist-credentials: false
 
       - name: Add upstream
         run: |
           git remote add upstream https://github.com/NginxProxyManager/docker-nginx-full.git
-          git fetch upstream
+          git fetch upstream/master
           git merge upstream/master --allow-unrelated-histories --no-edit || true
 
       - name: Push changes
