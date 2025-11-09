@@ -2,7 +2,7 @@ name: Run Jenkinsfile via Jenkinsfile Runner
 
 on:
   schedule:
-    - cron: '0 * * * *'    # hourly, adjust as needed
+    - cron: '0 0 * * *' # every day
   workflow_dispatch:
     inputs: {}
   push:
@@ -16,8 +16,8 @@ jobs:
       image: ghcr.io/jenkinsci/jenkinsfile-runner:master
     steps:
       - uses: actions/checkout@v2
-      - name: Log in to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+    #   - name: Log in to Docker Hub
+    #     run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
       - name: Run Jenkinsfile
         uses: jenkinsci/jfr-container-action@master
         with:
