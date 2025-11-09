@@ -16,10 +16,7 @@ jobs:
       image: ghcr.io/jenkinsci/jenkinsfile-runner:master
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: crowdsec
-          fetch-depth: 0
+        uses: actions/checkout@v2
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
       - name: Run Jenkinsfile
