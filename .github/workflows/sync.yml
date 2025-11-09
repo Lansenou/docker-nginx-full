@@ -18,7 +18,7 @@ jobs:
       - name: Add upstream
         run: |
           git remote add upstream https://github.com/NginxProxyManager/docker-nginx-full.git
-          git fetch upstream/master
+          git fetch upstream master
           git checkout crowdsec
           git merge upstream/master --allow-unrelated-histories --no-edit || true
 
