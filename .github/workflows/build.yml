@@ -22,7 +22,8 @@ jobs:
       - name: Print test value
         env:
           TEST: ${{ vars.TEST }}
-        run: echo $TEST
+        run: |
+            echo "Test value is: $TEST"
       - name: Log in to Docker Hub
         env: 
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
