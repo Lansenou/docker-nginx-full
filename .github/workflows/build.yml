@@ -22,4 +22,5 @@ jobs:
           if [ "$TAG" = "crowdsec" ]; then
             TAG="latest"
           fi
+          echo Pushing to image: nginx-full:$TAG
           ./local-buildx.sh -t nginx-full:$TAG
