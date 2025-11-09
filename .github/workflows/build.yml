@@ -19,7 +19,7 @@ jobs:
       - name: Update system
         run: |
             apt-get update
-            apt-get upgrade
+            apt-get upgrade -y
 
     #   - name: install nodejs20glibc2.17
     #     run: |
