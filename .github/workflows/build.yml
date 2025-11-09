@@ -12,14 +12,14 @@ on:
 jobs:
   jenkins-run:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jenkinsci/jenkinsfile-runner:master
+    # container:
+    #   image: ghcr.io/jenkinsci/jenkinsfile-runner:master
     steps:
       - uses: actions/checkout@v3
       - name: Log in to Docker Hub
         run: echo ${{ secrets.DOCKER_PASS }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
       - name: Run Jenkinsfile
-        uses: jenkinsci/jfr-container-action@master
+        uses: jenkinsci/jfr-static-image-action@master
         with:
           command: run
           jenkinsfile: .jenkins/Jenkinsfile
