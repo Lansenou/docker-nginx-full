@@ -17,6 +17,8 @@ jobs:
 
       - name: Add upstream
         run: |
+          git config --global user.email "gitlab-runner@example.com"
+          git config --global user.name "Gitlab Runner"
           git remote add upstream https://github.com/NginxProxyManager/docker-nginx-full.git
           git fetch upstream master
           git checkout crowdsec
