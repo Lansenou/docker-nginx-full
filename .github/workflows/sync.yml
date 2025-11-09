@@ -18,7 +18,7 @@ jobs:
         run: |
           git remote add upstream https://github.com/NginxProxyManager/docker-nginx-full.git
           git fetch upstream
-          git merge upstream/master --no-edit || true
+          git merge upstream/master --allow-unrelated-histories --no-edit || true
 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
