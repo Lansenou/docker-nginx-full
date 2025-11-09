@@ -15,19 +15,7 @@ jobs:
     container:
       image: ghcr.io/jenkinsci/jenkinsfile-runner:master
     steps:
-      - uses: actions/setup-node@v3
-      - name: Update system
-        run: |
-            apt-get update
-            apt-get upgrade -y
-
-    #   - name: install nodejs20glibc2.17
-    #     run: |
-    #         apt install curl -y
-    #         curl -LO https://unofficial-builds.nodejs.org/download/release/v20.9.0/node-v20.9.0-linux-x64-glibc-217.tar.xz
-    #         tar -xf node-v20.9.0-linux-x64-glibc-217.tar.xz --strip-components 1 -C /node20217
-    #         ldd /__e/node20/bin/node
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Log in to Docker Hub
         run: echo ${{ secrets.DOCKER_PASS }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
       - name: Run Jenkinsfile
