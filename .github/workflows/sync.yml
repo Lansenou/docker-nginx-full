@@ -1,6 +1,4 @@
 name: Sync with upstream
-permissions:
-  contents: write
 on:
   schedule:
     - cron: '0 0 * * *' # every day
@@ -28,6 +26,7 @@ jobs:
           git merge upstream/master --allow-unrelated-histories --no-edit || true
 
       - name: Push changes
-        run: |
-          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
-          git push origin HEAD:crowdsec
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: develop-crowdsec
