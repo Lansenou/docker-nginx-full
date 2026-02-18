@@ -23,7 +23,7 @@ jobs:
           git config --global user.name "Gitlab Runner"
           git remote add upstream https://github.com/NginxProxyManager/docker-nginx-full.git
           git fetch upstream master
-          git merge upstream/master --allow-unrelated-histories --no-edit || true
+          git merge upstream/master --allow-unrelated-histories --no-edit
           git add .
-          git commit -m "Merge with NginxProxyManager/master" || true
-          git push || true
+          git commit -m "Merge with NginxProxyManager/master"
+          git push
