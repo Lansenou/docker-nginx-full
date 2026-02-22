@@ -25,5 +25,4 @@ jobs:
           git fetch upstream master
           git merge upstream/master --allow-unrelated-histories --no-edit
           git add .
-          git commit -m "Merge with NginxProxyManager/master"
-          git push
+          git commit -m "Merge with NginxProxyManager/master" && git push || true
