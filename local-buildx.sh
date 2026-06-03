@@ -9,10 +9,10 @@ RESET='\E[0m'
 DOCKER_IMAGE="${REGISTRY:-}lansje/nginx-full"
 PLATFORMS=linux/amd64,linux/arm64
 
-export OPENRESTY_VERSION=1.27.1.2
-export CROWDSEC_OPENRESTY_BOUNCER_VERSION=1.1.0
+export OPENRESTY_VERSION=1.29.2.5
+export CROWDSEC_OPENRESTY_BOUNCER_VERSION=1.1.3
 export LUA_VERSION=5.1.5
-export LUAROCKS_VERSION=3.3.1
+export LUAROCKS_VERSION=3.13.0
 
 export BASE_IMAGE="${DOCKER_IMAGE}:latest"
 export ACMESH_IMAGE="${DOCKER_IMAGE}:acmesh"
@@ -35,7 +35,6 @@ docker buildx build \
 	--pull \
 	--push \
 	--build-arg OPENRESTY_VERSION \
-	--build-arg CROWDSEC_OPENRESTY_BOUNCER_VERSION \
 	--build-arg LUA_VERSION \
 	--build-arg LUAROCKS_VERSION \
 	-t "$BASE_IMAGE" \
